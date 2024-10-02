@@ -1,0 +1,37 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+
+# Ignore environment-specific files
+.env
+.venv
+env/
+venv/
+
+# Ignore logs
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+
+# Do not ignore package.json
+!package.json
+
+# Ignore node_modules
+node_modules/
+
+# Ignore build artifacts
+build/
+dist/
+
+# Ignore coverage reports
+coverage/
+
+# Ignore temporary files
+*.tmp
+*.swp
