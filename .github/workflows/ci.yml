@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, feature/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: |
+        cd hotel_campaign_automation
+        pip install poetry
+        poetry install
+    - name: Start backend server
+      run: |
+        cd hotel_campaign_automation
+        poetry run uvicorn hotel_campaign_automation.app:app --host 0.0.0.0 --port 8000 &
+        sleep 20  # Add a 20-second delay to ensure the server is fully started
+        # Check if the server is running
+        if nc -z localhost 8000; then
+          echo "Server is running on port 8000"
+        else
+          echo "Server is not running on port 8000"
+          exit 1
+        fi
+    - name: Run backend tests
+      run: |
+        cd hotel_campaign_automation
+        poetry run pytest
+
+  frontend-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Install dependencies
+      run: |
+        cd hotel_campaign_automation/frontend
+        npm ci
+    - name: Run frontend tests
+      run: |
+        cd hotel_campaign_automation/frontend
+        npm test
+
+  model-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: |
+        cd hotel_campaign_automation
+        pip install poetry
+        poetry install
+    - name: Start backend server
+      run: |
+        cd hotel_campaign_automation
+        poetry run uvicorn hotel_campaign_automation.app:app --host 0.0.0.0 --port 8000 &
+        sleep 20  # Add a 20-second delay to ensure the server is fully started
+        # Check if the server is running
+        if nc -z localhost 8000; then
+          echo "Server is running on port 8000"
+        else
+          echo "Server is not running on port 8000"
+          exit 1
+        fi
+    - name: Run model tests
+      run: |
+        cd hotel_campaign_automation
+        poetry run pytest test_backend.py
