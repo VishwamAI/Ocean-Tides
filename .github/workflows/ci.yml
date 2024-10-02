@@ -52,7 +52,7 @@ jobs:
     - name: Run frontend tests
       run: |
         cd hotel_campaign_automation/frontend
-        npm test
+        npm test -- --watchAll=false
 
   model-tests:
     runs-on: ubuntu-latest
