@@ -24,6 +24,7 @@ jobs:
       run: |
         cd hotel_campaign_automation
         poetry run uvicorn hotel_campaign_automation.app:app --host 0.0.0.0 --port 8000 &
+        sleep 10  # Add a 10-second delay to ensure the server is fully started
     - name: Run backend tests
       run: |
         cd hotel_campaign_automation
@@ -63,6 +64,7 @@ jobs:
       run: |
         cd hotel_campaign_automation
         poetry run uvicorn hotel_campaign_automation.app:app --host 0.0.0.0 --port 8000 &
+        sleep 10  # Add a 10-second delay to ensure the server is fully started
     - name: Run model tests
       run: |
         cd hotel_campaign_automation
