@@ -20,6 +20,10 @@ jobs:
         cd hotel_campaign_automation
         pip install poetry
         poetry install
+    - name: Start backend server
+      run: |
+        cd hotel_campaign_automation
+        poetry run uvicorn hotel_campaign_automation.app:app --host 0.0.0.0 --port 8000 &
     - name: Run backend tests
       run: |
         cd hotel_campaign_automation
@@ -55,6 +59,10 @@ jobs:
         cd hotel_campaign_automation
         pip install poetry
         poetry install
+    - name: Start backend server
+      run: |
+        cd hotel_campaign_automation
+        poetry run uvicorn hotel_campaign_automation.app:app --host 0.0.0.0 --port 8000 &
     - name: Run model tests
       run: |
         cd hotel_campaign_automation
